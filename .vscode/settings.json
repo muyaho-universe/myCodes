@@ -1,0 +1,30 @@
+{
+  "files.associations": {
+    "string.h": "c",
+    "cmath": "c",
+    "cstdarg": "c",
+    "cstdint": "c",
+    "cstdio": "c",
+    "cstdlib": "c",
+    "cwchar": "c",
+    "cwctype": "c",
+    "exception": "c",
+    "type_traits": "c",
+    "limits": "c",
+    "*.tcc": "c",
+    "typeinfo": "c",
+    "stdio.h": "c",
+    "stdlib.h": "c",
+    "AS5_3.C": "cpp",
+    "AS6_2.C": "cpp",
+    "vector": "c",
+    "iostream": "cpp",
+    "algorithm": "cpp",
+    "string": "cpp",
+    "random": "cpp",
+    "sstream": "cpp",
+    "ostream": "cpp",
+    "new": "cpp"
+  },
+  "C_Cpp.errorSquiggles": "Disabled"
+}
