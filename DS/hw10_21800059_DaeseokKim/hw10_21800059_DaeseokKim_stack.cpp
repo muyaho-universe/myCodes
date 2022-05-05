@@ -40,7 +40,6 @@ void palindromeStack::push(node t)
     (*p) = t;
     p->link = top;
     top = p;
-    return;
 }
 
 char palindromeStack::pop()

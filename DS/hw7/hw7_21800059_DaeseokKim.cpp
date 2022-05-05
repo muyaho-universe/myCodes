@@ -52,12 +52,12 @@ element my_queue::delete_q()
     {
         tmp = queue_arr[front];
         front = (front+1) % Q_SIZE;
-        return (tmp);
     }
     else
     {
-        return ("NULL", 0, 0);
+        tmp.set_data("NULL", 0, 0);
     }
+    return (tmp);
     
 }
 

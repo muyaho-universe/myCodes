@@ -33,6 +33,7 @@ void mystack::push(int num)
 
 int mystack::pop()
 {
+    if(stack_empty()) return NULL;
     top--;
     return(my_stack[top]);
 }

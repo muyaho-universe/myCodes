@@ -105,8 +105,6 @@ int main()
         }
 
         else continue;
-            
-
     }
          
     if (!s1.stack_empty()&& isPerfect)  // 반복문이 마무리 되었을 때 스택 안에 원소가 남아 있으면 짝이 완벽하지 않으므로 거짓
