@@ -59,12 +59,39 @@ int my_heap::h_size()
 
 void my_heap::insert_heap(element t)
 {
-    
+    int k;
+    csize++;
+    k = csize;
+    while ((k != 1) && (t.score > h[k / 2].score)) 
+    {
+        h[k] = h[k / 2];
+        k /= 2;
+    }
+    h[k] = t;
 }
 
 element my_heap::delete_heap()
 {
-
+    element t;
+    element tmp;
+    int parent, child;
+    t = h[1]; // for return value
+    tmp = h[csize]; // 끝원소
+    csize--;
+    parent = 1; // root
+    child = 2; // root의 left child
+    while (child <= csize) 
+    {
+        if ((child < csize) && (h[child].score < h[child + 1].score))
+            child++; // right child를 선택
+        if (tmp.score >= h[child].score)
+            break;
+        h[parent] = h[child];
+        parent = child; // 한단계 아래로
+        child *= 2;
+    }
+    h[parent] = tmp;
+    return t;
 }
 
 int main()

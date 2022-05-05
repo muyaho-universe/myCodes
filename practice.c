@@ -1,236 +1,134 @@
 #include <stdio.h>
-#include <string.h>
 #include <stdlib.h>
-// #include "product.h"
+#include <time.h>
 
-int NUM = 1;
-
-struct Product
-{
-        int num; // ¹øÈ£
-        char name[20]; //Á¦Ç°¸í
-        char description[100]; // ¼³¸í
-        char weight[10]; // Áß·®
-        int price;  // °¡°İ
-        int type;   // ¹è¼Û¹æ¹ı
-        char isDel; // »èÁ¦ ¿©ºÎ
-};
-
-struct Product* get_product(int count){
-        struct Product* p = (struct Product*)malloc(sizeof(struct Product));
-        char temp_name[20];
-        char temp_des[100];
-        p->num = count+1;
-        printf("Á¦Ç°¸íÀ» Àû¾îÁÖ¼¼¿ä :  ");
-        fgets(temp_name, 20, stdin);
-        temp_name[strlen(temp_name)-1] = '\0';
-        strcpy(p->name, temp_name);
-        printf("Á¦Ç° ¼³¸íÀ» Àû¾îÁÖ¼¼¿ä : ");
-        fgets(temp_des, 100, stdin);
-        temp_des[strlen(temp_des)-1] = '\0';
-        strcpy(p->description, temp_des);
-        printf("Á¦Ç°ÀÇ ¹«°Ô¸¦ Àû¾îÁÖ¼¼¿ä : ");
-        scanf("%s", p->weight);
-        printf("Á¦Ç°ÀÇ °¡°İÀ» Àû¾îÁÖ¼¼¿ä :  ");
-        scanf("%d", &p->price);
-        printf("Á¦Ç°ÀÇ ¹è¼Û¹æ¹ıÀ» Àû¾îÁÖ¼¼¿ä : ");
-        scanf("%d", &p->type);
-
-        printf("=> ÀúÀå¿Ï·á!!\n");
-        return p;
-
-}       // Á¦Ç°À» Ãß°¡ÇÏ´Â ÇÔ¼ö
-void readProduct(struct Product* p){
-        printf("%d %d %s: %s %s %d\n", p->num, p->price, p->name, p->description, p->weight, p->type);
-}       // ÇÏ³ªÀÇ Á¦Ç° Ãâ·Â ÇÔ¼ö
-int listProduct(struct Product* p[], int count){
-        printf("*****************\n");
-        for (int i = 0; i < count; i++)
-        {
-                readProduct(p[i]);
-        }
-        return 1;
-} // ÀüÃ¼ µî·ÏµÈ Á¦Ç° ¸®½ºÆ® Ãâ·Â
-void searchProduct(struct Product *p[], int count, int type)
-{
-        char n_data[20], w_data[10];
-        int t_data, go = 0;
-
-        if(type == 1 )
-        {
-                printf("Ã£´Â ¹°°ÇÀÌ¸§Àº? ");
-                fgets(n_data, 20, stdin);
-                n_data[strlen(n_data)-1] = '\0';
-
-                printf("*****************\n");
-                for (int i = 0; i < count; i++)
-                {
-                        if (strstr(p[i]->name, n_data) != NULL)
-                        {
-                                printf("%d %d %s: %s %s %d\n", p[i]->num, p[i]->price, p[i]->name,p[i]->description, p[i]->weight, p[i]->type);
-                        }
-                }
-        }
-
-        else if(type == 2)
-        {
-                printf(" Ã£´Â ¹°°Ç ¹«°Ô´Â?(´ÜÀ§±îÁö ÀÔ·Â) ");
-                fgets(w_data, 10, stdin);
-                w_data[strlen(w_data)-1] = '\0';
-                printf("*****************\n");
-                for (int i = 0; i < count; i++)
-                {
-                        if (strstr(p[i]->weight, w_data) != NULL)
-                        {
-                                readProduct(p[i]);
-                        }
-                }
-
-        }
-
-        else if(type == 3)
-        {
-                printf("Ã£´Â ¹°°ÇÀÇ ¹è¼Û ¹æ¹ıÀº?(1:»õº®¹è¼Û /2:ÅÃ¹è¹è¼Û) ");
-                scanf("%d", &t_data);
-                printf("*****************\n");
-                for (int i = 0; i < count; i++)
-                {
-                        if (p[i]->type == t_data)
-                        {
-                                readProduct(p[i]);
-                        }
-                }
-        }
-
-        else
-        {
-                printf("Àß¸øµÈ °Ë»öÅ¸ÀÔÀÔ´Ï´Ù.\n");
-        }
-}       // Á¦Ç°ÀÌ¸§ °Ë»ö
-int load_product(struct Product* p[], char* filename){
-        FILE * fp;
-        printf("¹«¾ßÈ£~");
-        int i = 0;
-        if(fp = fopen(filename, "r"))
-        {
-                while (!feof(fp)){
-                int t_price, t_num;     //temporary variable for reading from file
-                char t_name[20], t_des[100],t_weight[10] ;
-                int t_type;
-                int t = fscanf(fp,"%d %d %[^\n]s %[^\n]s %[^\n]s %d",  &t_num, &t_price, t_name, t_des,t_weight, &t_type);
-                if (t <= 0) break;
-                p[i] = (struct Product*) malloc(sizeof(struct Product));
-                strcpy(p[i]->name, t_name);
-	                    strcpy(p[i]->description, t_des);
-                strcpy(p[i]->weight, t_weight);
-                p[i]->num = t_num;
-                p[i]->price = t_price;
-                p[i]->type = t_type;
-                i++;
-                }
-        printf("=> ·Îµù¼º°ø!\n");
-        fclose(fp);
-        }
-        else
-        {
-                printf("\n=> ÆÄÀÏÀÌ ¾ø½À´Ï´Ù!\n");
-        }
-
-        return i;
-}       // Á¦Ç°Á¤º¸°¡ ÀúÀåµÈ ÆÄÀÏ ÀĞ±â/ type¿¡ µû¶ó °Ë»öÀÇ ³»¿ëÀÌ ´Ş¶óÁü
-void save_product(struct Product* p[], char* filename, int count){
-        FILE * fp;
-         fp = fopen(filename, "w");
-        for ( int i = 0; i < count; i++){
-                fprintf(fp,"%d %d %s %s %s %d \n", i + 1, p[i]->price, p[i]->name, p[i]->description, p[i]->weight, p[i]->type);
-        }
-        fclose(fp);
-        printf("ÀúÀå¿Ï·á!\n");
-}       // ÆÄÀÏ¿¡ Á¦Ç° Á¤º¸ ÀúÀå
-int selectMenu(){
-    int menu;
-    printf("\n*** Product Menu Select ***\n");
-    printf("1. Á¦Ç°Á¶È¸\n");
-    printf("2. Á¦Ç°Ãß°¡\n");
-    printf("3. ÆÄÀÏÀúÀå\n");
-    printf("4. Á¦Ç°°Ë»ö\n");
-    printf("0. Á¾·á\n\n");
-    printf("=> ¿øÇÏ´Â ¸Ş´º´Â? ");
-    scanf("%d", &menu);
-    while (getchar()!='\n');
-    return menu;
-}
+int findRoom(int persons[5]); // 5ê°œì˜ í˜¸ì‹¤ ì¤‘ ë¹ˆ ë² ë“œê°€ ìˆëŠ” ë°©ì„ ì°¾ì•„ë‚¸ë‹¤. (ë¦¬í„´ê°’ 1~5)
+void printReport(char mn[10][20], int mr[10], int mc, char wn[10][20], int wr[10], int wc); // ë°°ì • ê²°ê³¼ë¥¼ ì¶œë ¥í•œë‹¤.
 
 int main(){
-     struct Product* p[20];
-        int count = 0, menu, type;
-        int isLoaded, isAdd, isDel;
-        int selectedNum;
-        int go;
-        char filename[100]="product.txt";
+   char mnames[10][20]; // ë‚¨í•™ìƒëª…ë‹¨(ìµœëŒ€ 10ëª…)
+   int mroom[10];      // ë‚¨í•™ìƒëª…ë‹¨ë³„ í˜¸ì‹¤ ë°°ì • ëª©ë¡
+   char wnames[10][20]; // ì—¬í•™ìƒëª…ë‹¨(ìµœëŒ€ 10ëª…)
+   int wroom[10];      // ì—¬í•™ìƒëª…ë‹¨ë³„ í˜¸ì‹¤ ë°°ì • ëª©ë¡
+   int person[2][5]={0};   // 2ê°œ ì¸µë³„ 5ê°œ í˜¸ì‹¤ì˜ ë°°ì • ì¸ì› ìˆ˜ 
+   int mcount=0, wcount=0; // ì¸ì› í•©ê³„ (ë‚¨, ì—¬)
+   int menu;
 
-        count = load_product(p, filename);
-        if (count != 0)
-        {
-                NUM = count + 1;
-        }
+   srand(time(0));
+   printf("===========================================\n");
+   printf("ìƒí™œê´€ í˜¸ì‹¤ ë°°ì • í”„ë¡œê·¸ë¨\n");
+   printf("===========================================\n");
+   while(1){
+      printf("ë©”ë‰´ : 1.ë‚¨í•™ìƒ ë“±ë¡ 2.ì—¬í•™ìƒ ë“±ë¡ 0.ì¢…ë£Œ > ");
+      scanf("%d", &menu);
+      if(menu==0) break;
+      else if(menu==1) {
+         if(mcount>=10) {
+            printf("ì •ì› ì´ˆê³¼ì…ë‹ˆë‹¤. ë“±ë¡ë¶ˆê°€!\n");
+            continue;
+         }
+         printf("í•™ìƒ ì´ë¦„ì€? > ");
+         scanf("%s", mnames[mcount]);
+         int roomno = findRoom(person[0]);
+         mroom[mcount] = 100+roomno;
+         printf("%s í•™ìƒ %dí˜¸ì‹¤ ë°°ì •ë˜ì—ˆìŠµë‹ˆë‹¤.\n", mnames[mcount], mroom[mcount]);
+         mcount++;
+      }
+      else if(menu==2) {
+         if(wcount>=10) {
+            printf("ì •ì› ì´ˆê³¼ì…ë‹ˆë‹¤. ë“±ë¡ë¶ˆê°€!\n");
+            continue;
+         }
+         printf("í•™ìƒ ì´ë¦„ì€? > ");
+         scanf("%s", wnames[wcount]);
+         int roomno = findRoom(person[1]);
+         wroom[wcount] = 200+roomno;
+         printf("%s í•™ìƒ %dí˜¸ì‹¤ ë°°ì •ë˜ì—ˆìŠµë‹ˆë‹¤.\n", wnames[wcount], wroom[wcount]);
+         wcount++;
+      }
+   }
 
-        while(1)
-        {
-                if (count ==20) break;
+   printf("===========================================\n");
+   printf("ìƒí™œê´€ í˜¸ì‹¤ ë°°ì • ê²°ê³¼ëŠ” ë‹¤ìŒê³¼ ê°™ìŠµë‹ˆë‹¤.\n");
+   printf("===========================================\n");
+   printReport(mnames, mroom, mcount, wnames, wroom, wcount);
 
-                menu = selectMenu();
-                if (menu == 0) break;
-                else if (menu == 1)
-                {
-                        isLoaded = listProduct(p, count);
-                }
-                else if (menu == 2)
-                {
-                        p[count] = get_product(count);
-                        NUM++;
-                        count++;
-                }
-                else if (menu == 3)
-                {
-                        save_product(p, filename, count);
-                }
-                else if (menu == 4)
-                {
-                        printf("°Ë»öÅ¸ÀÔÀº? ");
-                        scanf("%d", &type);
-                        while (getchar()!='\n');
-                        searchProduct(p, count,type);
-                }
-                // else if (menu == 5)
-                // {
-                //         printf("¹øÈ£´Â (Ãë¼Ò :0)?");
-                //         scanf("%d", &selectedNum);
-                //         if (selectedNum == 0) continue;
-                //         printf("Á¤¸»·Î »èÁ¦ÇÏ½Ã°Ú½À´Ï±î?(»èÁ¦ :1) ");
-                //         scanf("%d", &go);
-                //         if (go != 1) continue;
-                //         deleteProduct(p, selectedNum-1);
-                // }
-//                 else if (menu == 6)
-//                 {
-//                         printf("\n¹øÈ£´Â (Ãë¼Ò :0)?");
-//                         scanf("%d", &selectedNum);
-//                         while (getchar()!='\n');
-//                         if (selectedNum == 0) continue;
-//                         p[selectedNum-1] = updateProduct(selectedNum);
-//                         printf("=> ¼öÁ¤µÊ!\n");
-// }
-                else
-                {
-                        printf("¾ø´Â ¸Ş´ºÀÔ´Ï´Ù.\n");
-                }
+   return 0;
+}
 
-        }
-        printf("Á¾·áµÊ!\n");
+int findRoom(int persons[5]){
+// ì´ ê³³ì— ìƒê° ì •ë¦¬
+/*
+ë°© ë²ˆí˜¸ë¥¼ ëœë¤ìœ¼ë¡œ ìƒì„±í•˜ê³  ë§Œì•½ ê·¸ ë°©ì´ ì´ë¯¸ 2ëª… ì°¨ìˆë‹¤ë©´ ë‹¤ì‹œ ë§Œë“¤ê²Œ í•œë‹¤.
+ë§Œì•½ ëœë¤ ìƒì„±ëœ ë²ˆí˜¸ì˜ í•´ë‹¹ ë°©ì— 2ëª…ì´ ìˆëŠ” ê²½ìš°ê°€ ì•„ë‹ˆë¼ë©´ ê°’ì„ ë¦¬í„´í•œë‹¤.
+*/    
+  int rnum;
+  srand(time(0));
+  
+   while(1)
+  {
+    rnum = rand() % 5 + 1;
+    if(persons[0] != 2 && rnum == 1)
+    {
+      persons[0]++;
+      break;
+    }
+    else if(persons[1] != 2 && rnum == 2)
+    {
+      persons[1]++;
+      break;
+    }
+    else if(persons[2] != 2 && rnum == 3)
+    {
+      persons[2]++;
+      break;
+    }
+    else if(persons[3] != 2 && rnum == 4)
+    {
+      persons[3]++;
+      break;
+    }
+    else if(persons[4] != 2 && rnum == 5)
+    {
+      persons[4]++;
+      break;
+    }
+  }
 
-        return 0;
+ return rnum;
+}
 
-
-    
-}                                                
+void printReport(char mn[10][20], int mr[10], int mc, char wn[10][20], int wr[10], int wc){
+// ì´ ê³³ì— ìƒê° ì •ë¦¬
+  int i, j;
+  printf("ë‚¨í•™ìƒ ëª…ë‹¨ (%dëª…)\n", mc);
+  for(i = 0; i < mc; i++)
+  {
+    printf("%d. %s [%dí˜¸]\n", i + 1, mn[i], mr[i]);
+  }
+  printf("\nì—¬í•™ìƒ ëª…ë‹¨ (%dëª…)\n", wc);
+  for(i = 0; i < wc; i++)
+  {
+    printf("%d. %s [%dí˜¸]\n", i + 1, wn[i], wr[i]);
+  }
+  printf("\ní˜¸ì‹¤ë³„ ë°°ì • ëª…ë‹¨\n");
+  for(i = 0; i < 5; i++)
+  {
+    printf("%dí˜¸ : ", 101 + i);
+    for(j = 0; j < mc; j++) 
+    {
+      if(mr[j] == 101 + i) printf("%s ", mn[j]);
+    }
+    printf("\n");
+  }
+  for(i = 0; i < 5; i++)
+  {
+    printf("%dí˜¸ : ", 201 + i);
+    for(j = 0; j < wc; j++) 
+    {
+      if(wr[j] == 201 + i) printf("%s ", wn[j]);
+    }
+    printf("\n");
+  }
+  
+}
