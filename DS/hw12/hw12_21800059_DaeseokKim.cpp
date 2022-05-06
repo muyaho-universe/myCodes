@@ -18,6 +18,8 @@ void element::set_data(string n, double s)
 }
 
 int summation(element a[], int troot, int n);
+int delete_node(element a[], int troot, string tname, int n);
+void heap_adjust(element a[], int troot, int size);
 
 class my_heap {
     element h[HSIZE];
@@ -121,9 +123,17 @@ double my_heap::score_average()
     return score_sum() / csize;
 }
 
-void my_heap::node_delete_by_name(string name)
+void my_heap::node_delete_by_name(string tname)
 {
-    
+    if (csize == 0)
+        return 0;
+    if ( delete_node(h, 1, tname, csize) == 1)
+    {
+        csize--;
+        return 1;
+    }
+    else
+        return 0;
 }
 
 int main()
@@ -152,3 +162,10 @@ int summation(element a[], int troot, int n)
         return 0;
     return (a[troot].score + summation(a, 2*troot, n) + summation(a, 2*troot+1, n)); 
 }
+
+int delete_node(element a[], int troot, string tname, int n)
+{
+
+}
+
+void heap_adjust(element a[], int troot, int size);
