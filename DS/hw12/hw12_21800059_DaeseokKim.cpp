@@ -165,7 +165,21 @@ int summation(element a[], int troot, int n)
 
 int delete_node(element a[], int troot, string tname, int n)
 {
-
+    int temp;
+    if(troot > n)
+        return 0;
+    if (a[troot].name == tname)
+    {
+        heap_adjust(a, troot, n);
+        return 1;
+    }
+    temp = delete_node(a, troot * 2, tname, n);
+    if(temp != 1)
+        temp = delete_node(a, troot * 2 + 1, tname, n);
+    return temp;
 }
 
-void heap_adjust(element a[], int troot, int size);
+void heap_adjust(element a[], int troot, int size)
+{
+    
+}
