@@ -25,7 +25,10 @@
     "sstream": "cpp",
     "ostream": "cpp",
     "new": "cpp",
-    "complex": "cpp"
+    "complex": "cpp",
+    "bitset": "c",
+    "chrono": "c",
+    "list": "c"
   },
   "C_Cpp.errorSquiggles": "Disabled"
 }

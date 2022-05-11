@@ -34,7 +34,7 @@ public :
     bool heap_empty();
     int score_sum();
     double score_average();
-    void node_delete_by_name(string name);
+    int node_delete_by_name(string name);
     void adjust(int t_root);
 };
 
@@ -50,7 +50,7 @@ my_heap::my_heap(element ele[], int num)
         h[k] = ele[k-1];
     csize = num;
     for (k = num / 2; k >= 1; k--)
-        adjust(k)
+        adjust(k);
 }
 
 
@@ -124,10 +124,10 @@ double my_heap::score_average()
     if (csize == 0)
         return 0;
     
-    return score_sum() / csize;
+    return (double) score_sum() / csize;
 }
 
-void my_heap::node_delete_by_name(string tname)
+int my_heap::node_delete_by_name(string tname)
 {
     if (csize == 0)
         return 0;
@@ -140,7 +140,7 @@ void my_heap::node_delete_by_name(string tname)
         return 0;
 }
 
-void my_heap::adjust(string tname)
+void my_heap::adjust(int t_root)
 {
     double tmpkey;
     int child;
@@ -208,5 +208,23 @@ int delete_node(element a[], int troot, string tname, int n)
 
 void heap_adjust(element a[], int troot, int size)
 {
-    
+    double tmpkey;
+    int child;
+    element tmp;
+    tmp = a[troot];
+    tmpkey = a[troot].score;
+    child = 2 * troot;
+    while (child <= size) 
+    {
+        if ((child < size) && (a[child].score < a[child + 1].score))
+            child++;
+        if (tmpkey > a[child].score)
+            break;
+        else 
+        {
+            a[child / 2] = a[child];
+            child *= 2;
+        }
+    }
+    a[child / 2] = tmp;
 }
