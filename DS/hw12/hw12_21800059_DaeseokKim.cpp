@@ -24,6 +24,7 @@ void heap_adjust(element a[], int troot, int size);
 class my_heap {
     element h[HSIZE];
     int csize; // the number of elements
+    void adjust(int t_root);
 public :
     my_heap();
     my_heap(element ele[], int num);
@@ -35,7 +36,6 @@ public :
     int score_sum();
     double score_average();
     int node_delete_by_name(string name);
-    void adjust(int t_root);
 };
 
 my_heap::my_heap()
@@ -192,12 +192,14 @@ int summation(element a[], int troot, int n)
 
 int delete_node(element a[], int troot, string tname, int n)
 {
-    int temp;
+    int temp = 0;
     if(troot > n)
         return 0;
     if (a[troot].name == tname)
     {
-        heap_adjust(a, troot, n);
+        a[troot] = a[n];
+        for (int i = troot / 2; i >= 1; i--)
+            heap_adjust(a, i, n);
         return 1;
     }
     temp = delete_node(a, troot * 2, tname, n);
