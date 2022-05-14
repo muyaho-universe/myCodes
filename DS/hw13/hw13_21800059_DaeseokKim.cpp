@@ -2,13 +2,15 @@
 #include <string>
 using namespace std;
 
-class bst_node
-{
+class bst_node {
 public:
-    string name;
-    string s_id;
-    double score;
+    string s_id;   // 학번
+    string name;// 성명
+    double  score;  // 점수
     bst_node * left, * right;
+    bst_node();
+    bst_node(string s1, string s2, double n);
+    void set_data(string s1, string s2, double n);
 };
 
 class bst_tree
@@ -20,6 +22,7 @@ public:
     void insert_node(bst_nodet);
     bool empty();
     int size();
+    void show_inorder();
     bst_node search(string s);  // s_record search(string s);   ...
 };
 
