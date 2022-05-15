@@ -48,10 +48,85 @@ bst_node bst_tree::search(string tid)
     p = root;
     if (root == NULL) 
     {// 해당 node 없음 처리 예
-    bst_node tmp;
-    tmp.set_data("00000000", "None", -1);
-    cout << "The key " << tid << " does not exist.\n";return tmp;
+        bst_node tmp;
+        tmp.set_data("00000000", "None", -1);
+        cout << "The key " << tid << " does not exist.\n";return tmp;
     }
+
+    while (1) 
+    {
+        if (p->s_id == tid)
+            return (*p);
+        if (p->s_id < tid) 
+        {
+            if (p->right == NULL) 
+            {
+                // .. 해당노드 없음 처리
+            }
+            else
+                p = p->right;
+        }
+        else 
+        {
+            if (p->left == NULL) 
+            {
+            // .. 해당노드 없음 처리
+            }
+            else
+                p = p->left;
+        }
+    }
+}
+
+void bst_tree::insert_node(bst_node t)
+{
+    bst_node* p;
+    bst_node* tmp;
+    
+    tmp = new bst_node;
+    *tmp = t;
+    tmp->left = NULL;
+    tmp->right = NULL;
+    
+    if (root == NULL) {
+        root = tmp;
+        return;
+    }
+    
+    p = root;
+    
+    while (1)
+    {
+        if (p->s_id == t.s_id)
+        {
+            cout << "Insertion Failed : the Key " << t.s_id << " already exists." << endl;
+            return;
+        }
+        
+        if (p->s_id < t.s_id) 
+        {
+            if (p->right == NULL) 
+            {
+                p->right = tmp;
+                return;
+            }
+            else
+                p = p->right;
+        }
+        
+        else 
+        {
+            if (p->left == NULL) 
+            {
+                p->left = tmp;
+                return;
+            }
+            else
+                p = p->left;
+        }
+    }
+}
+
 
 int main()
 {
