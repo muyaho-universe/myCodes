@@ -2,7 +2,8 @@
 #include <string>
 using namespace std;
 
-class bst_node {
+class bst_node 
+{
 public:
     string s_id;   // 학번
     string name;// 성명
@@ -13,18 +14,44 @@ public:
     void set_data(string s1, string s2, double n);
 };
 
+bst_node::bst_node()
+{
+
+}
+
+bst_node::bst_node(string s1, string s2, double n)
+{
+    
+}
+
+void bst_node::set_data(string s1, string s2, double n)
+{
+
+}
+
 class bst_tree
 {
     bst_node * root;
     int csize;
 public:
     bst_tree();
-    void insert_node(bst_nodet);
+    void insert_node(bst_node t);
     bool empty();
     int size();
     void show_inorder();
     bst_node search(string s);  // s_record search(string s);   ...
 };
+
+bst_node bst_tree::search(string tid)
+{
+    bst_node * p;
+    p = root;
+    if (root == NULL) 
+    {// 해당 node 없음 처리 예
+    bst_node tmp;
+    tmp.set_data("00000000", "None", -1);
+    cout << "The key " << tid << " does not exist.\n";return tmp;
+    }
 
 int main()
 {
