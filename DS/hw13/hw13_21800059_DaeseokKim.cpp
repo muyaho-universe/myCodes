@@ -88,7 +88,8 @@ void bst_tree::insert_node(bst_node t)
     tmp->left = NULL;
     tmp->right = NULL;
     
-    if (root == NULL) {
+    if (root == NULL) 
+    {
         root = tmp;
         return;
     }
