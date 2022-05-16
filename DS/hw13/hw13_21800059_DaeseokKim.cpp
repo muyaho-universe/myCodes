@@ -33,7 +33,7 @@ void bst_node::set_data(string s1, string s2, double n)
     score = n;
 }
 
-void show_tree_inorder(bst_node p);
+void show_tree_inorder(bst_node* p);
 
 class bst_tree
 {
