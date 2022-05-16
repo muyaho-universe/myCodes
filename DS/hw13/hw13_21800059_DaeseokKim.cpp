@@ -16,17 +16,21 @@ public:
 
 bst_node::bst_node()
 {
-
+    score = 0;
 }
 
 bst_node::bst_node(string s1, string s2, double n)
 {
-    
+    s_id = s1;
+    name = s2;
+    score = n;
 }
 
 void bst_node::set_data(string s1, string s2, double n)
 {
-
+    s_id = s1;
+    name = s2;
+    score = n;
 }
 
 class bst_tree
@@ -41,6 +45,12 @@ public:
     void show_inorder();
     bst_node search(string s);  // s_record search(string s);   ...
 };
+
+bst_tree::bst_tree()
+{
+    root = NULL;
+    csize = 0;
+}
 
 bst_node bst_tree::search(string tid)
 {
