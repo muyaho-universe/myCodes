@@ -203,7 +203,7 @@ void show_tree_inorder(bst_node* p)
     if (p == NULL)
         return;
     show_tree_inorder(p->left);
-    cout << p->s_id << p->name << p->score << endl;
+    cout << p->s_id << " : " << p->name << " : " << p->score << endl;
     show_tree_inorder(p->right);
     
 }
