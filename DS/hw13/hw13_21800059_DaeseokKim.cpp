@@ -33,6 +33,8 @@ void bst_node::set_data(string s1, string s2, double n)
     score = n;
 }
 
+void show_tree_inorder(bst_node p);
+
 class bst_tree
 {
     bst_node * root;
@@ -60,7 +62,8 @@ bst_node bst_tree::search(string tid)
     {// 해당 node 없음 처리 예
         bst_node tmp;
         tmp.set_data("00000000", "None", -1);
-        cout << "The key " << tid << " does not exist.\n";return tmp;
+        cout << "The key " << tid << " does not exist.\n";
+        return tmp;
     }
 
     while (1) 
@@ -71,7 +74,10 @@ bst_node bst_tree::search(string tid)
         {
             if (p->right == NULL) 
             {
-                // .. 해당노드 없음 처리
+                bst_node tmp;
+                tmp.set_data("00000000", "None", -1);
+                cout << "The key " << tid << " does not exist.\n";
+                return tmp;
             }
             else
                 p = p->right;
@@ -80,7 +86,10 @@ bst_node bst_tree::search(string tid)
         {
             if (p->left == NULL) 
             {
-            // .. 해당노드 없음 처리
+                bst_node tmp;
+                tmp.set_data("00000000", "None", -1);
+                cout << "The key " << tid << " does not exist.\n";
+                return tmp;
             }
             else
                 p = p->left;
@@ -138,6 +147,27 @@ void bst_tree::insert_node(bst_node t)
     }
 }
 
+bool bst_tree::empty()
+{
+    if(csize == 0) 
+        return true;
+    return false;
+}
+
+int bst_tree::size()
+{
+    return csize;
+}
+void bst_tree::show_inorder()
+{
+    if (root == NULL)
+    {
+        cout << "Nothing to print out!" << endl;
+        return;
+    }
+    
+    show_tree_inorder(root);
+}
 
 int main()
 {
@@ -166,5 +196,14 @@ int main()
     cout << " Score        : " << temp.score << endl;
 
     return 0;
+}
 
+void show_tree_inorder(bst_node* p)
+{
+    if (p == NULL)
+        return;
+    show_tree_inorder(p->left);
+    cout << p->s_id << p->name << p->score << endl;
+    show_tree_inorder(p->right);
+    
 }
