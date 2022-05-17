@@ -14,7 +14,7 @@ class stack_node
 {
 public:
     stack_node();
-    node n;
+    node* n;
     stack_node *link;
 };
 
@@ -42,7 +42,7 @@ void nstack::push(node* t)
 {
     stack_node *p;
     p = new stack_node;
-    (*p).n = *t;
+    p->n = t;
     p->link = top;
     top = p;
 }
@@ -51,7 +51,7 @@ node* nstack::pop()
 {
     if(stack_empty())
     {
-        node tmp;
+        node* tmp;
         cout << "Stack is empty\n";
         return tmp;
     }
@@ -75,7 +75,7 @@ bool nstack::stack_empty()
 class queue_node
 {
 public:
-    node n;
+    node* n;
     queue_node *link;  
 };
 
@@ -84,10 +84,9 @@ class my_queue
     queue_node *front, *rear;
 public:
     my_queue();
-    void insert_q(node x);
-    node delete_q();
+    void insert_q(node* x);
+    node* delete_q();
     bool empty();
-
 };
 
 my_queue::my_queue()
@@ -96,11 +95,11 @@ my_queue::my_queue()
     rear = NULL;
 }
 
-void my_queue::insert_q(node x)
+void my_queue::insert_q(node* x)
 {
     queue_node *p;
     p = new queue_node;
-    (*p).n = x;
+    p->n = x;
     p->link = NULL;
     if(!empty())
         rear->link = p; // 이전 상태가 empty가 아니라면
@@ -109,12 +108,12 @@ void my_queue::insert_q(node x)
     rear = p;  
 }
 
-node my_queue::delete_q()
+node* my_queue::delete_q()
 {
-    node temp;
+    node* temp;
     queue_node *t;
     t = front;
-    temp = (*front).n;
+    temp = front->n;
     front = t->link;
     delete t;
     if(front==NULL)
@@ -248,6 +247,28 @@ void my_tree::nonrecursive_inorder()
     
 }
 
+void my_tree::print_data_levelorder()
+{
+    my_queue a1;
+    node* t;
+
+    if (root == NULL)
+        return;
+    a1.insert_q(root);
+    
+    while (true)
+    {
+        if(a1.empty())
+            return;
+        t = a1.delete_q();
+        cout << t->name << " : " << t->score << endl;
+        if(t->left != NULL)
+            a1.insert_q(t->left);
+        if (t->right != NULL)
+            a1.insert_q(t->right);        
+    }
+}
+
 int node_insert_left(node *p, string tname, node tnode)
 {
     if (p == NULL) return 0;
@@ -330,6 +351,54 @@ void postorder_print(node *p)
     postorder_print(p->left);
     postorder_print(p->right);
     cout << p->name << ":" << p->score << endl;
+}
+
+node *make_copy(node *p)
+{
+    node* t;
+
+    if (p == NULL)
+    {
+        return NULL;
+    }
+
+    t = new node;
+    *t = *p;    // data copy
+    t->left = make_copy(p->left);
+    t->right = make_copy(p->right);
+    return t;
+}
+
+void copy_tree(my_tree &t1, my_tree t2)
+{
+    t1.node_count = t2.node_count;
+    t1.root = make_copy(t2.root);
+}
+
+bool equal_test(node *p1, node *p2)
+{
+    if((p1 == NULL) && (p2 == NULL))
+        return true;
+    if(p1 == NULL)
+        return false;
+    if(p2 == NULL)
+        return false;
+    if (p1->name != p2->name)
+        return false;
+    if (p1->score != p2->score)
+        return false;
+
+    if(equal_test(p1->left, p2->left) && equal_test(p1->right, p2->right))
+        return true;
+    else
+        return false;    
+}
+
+bool equal_tree(my_tree t1, my_tree t2)
+{
+    if (t1.node_count != t2.node_count)
+        return false;
+    return equal_test(t1.root, t2.root);
 }
 
 
