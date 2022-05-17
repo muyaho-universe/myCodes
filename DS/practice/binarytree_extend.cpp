@@ -10,6 +10,125 @@ public :
     void set_data(string s, double n);
 };
 
+class stack_node
+{
+public:
+    stack_node();
+    node n;
+    stack_node *link;
+};
+
+stack_node::stack_node()
+{
+    link = NULL;
+}
+
+class nstack
+{
+    stack_node *top;
+public:
+    nstack();
+    void push(node* t);
+    node* pop();
+    bool stack_empty();
+};
+
+nstack::nstack()
+{
+    top = NULL;
+}
+
+void nstack::push(node* t)
+{
+    stack_node *p;
+    p = new stack_node;
+    (*p).n = *t;
+    p->link = top;
+    top = p;
+}
+
+node* nstack::pop()
+{
+    if(stack_empty())
+    {
+        node tmp;
+        cout << "Stack is empty\n";
+        return tmp;
+    }
+    node* temp;
+    stack_node *t;
+    t = top;
+    
+    temp = top->n;
+    top = top->link;
+    delete t;
+    return temp;
+}
+
+bool nstack::stack_empty()
+{
+    if(top == NULL) 
+        return true;
+    return false;
+}
+
+class queue_node
+{
+public:
+    node n;
+    queue_node *link;  
+};
+
+class my_queue
+{
+    queue_node *front, *rear;
+public:
+    my_queue();
+    void insert_q(node x);
+    node delete_q();
+    bool empty();
+
+};
+
+my_queue::my_queue()
+{
+    front = NULL;
+    rear = NULL;
+}
+
+void my_queue::insert_q(node x)
+{
+    queue_node *p;
+    p = new queue_node;
+    (*p).n = x;
+    p->link = NULL;
+    if(!empty())
+        rear->link = p; // 이전 상태가 empty가 아니라면
+    else
+        front = p;       // 이전 상태가 empty였다면 front도 변경
+    rear = p;  
+}
+
+node my_queue::delete_q()
+{
+    node temp;
+    queue_node *t;
+    t = front;
+    temp = (*front).n;
+    front = t->link;
+    delete t;
+    if(front==NULL)
+        rear = NULL;
+    return temp;
+}
+
+bool my_queue::empty()
+{
+    if ((rear == NULL) &&(front == NULL))
+        return true;
+    return false;
+}
+
 int node_insert_left(node *p, string tname, node tnode); 
 int node_insert_right(node *p, string tname, node tnode);
 double sum_allnodes(node *p);
@@ -36,6 +155,9 @@ public :
     void print_data_inorder(); // inorder 순서로 모든 node의 값 출력
     void print_data_preorder(); // preorder 순서로 모든 node의 값 출력
     void print_data_postorder(); // postorder 순서로 모든 node의 값 출력
+
+    void nonrecursive_inorder();
+    void print_data_levelorder();
 };
 
 my_tree::my_tree() // constructor : 초기 empty 상태 설정
@@ -99,6 +221,31 @@ void my_tree::print_data_preorder()
 void my_tree::print_data_postorder()
 {
     postorder_print(root);
+}
+
+void my_tree::nonrecursive_inorder()
+{
+    nstack s1;
+    node *t;
+    
+    t = root;
+    while (true)
+    {
+        while (t != NULL)
+        {
+            s1.push(t);
+            t = t->left;
+        }
+        while (t == NULL)
+        {
+            if(s1.stack_empty())
+                return;
+            t = s1.pop();
+        }
+        cout << t->name << " : " << t->score << endl;
+        t = t->right;        
+    }
+    
 }
 
 int node_insert_left(node *p, string tname, node tnode)
