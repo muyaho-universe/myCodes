@@ -58,18 +58,18 @@ bool my_heap::heap_empty()
 {
     // return (csize == 0);
     if (csize == 0)
-    return true;
+        return true;
     else
-    return false;
+        return false;
 }
 
 bool my_heap::heap_full()
 {
     // return (csize >= HSIZE-1);
     if (csize >= HSIZE-1)
-    return true;
+        return true;
     else
-    return false;
+        return false;
 }
 
 int my_heap::h_size()
