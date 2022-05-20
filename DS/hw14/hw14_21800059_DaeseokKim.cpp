@@ -2,6 +2,8 @@
 #include <string>
 using namespace std;
 
+int menu();
+
 class bst_node 
 {
 public:
@@ -206,4 +208,18 @@ void show_tree_inorder(bst_node* p)
     cout << p->s_id << " : " << p->name << " : " << p->score << endl;
     show_tree_inorder(p->right);
     
+}
+
+int menu()
+{
+    int m;
+    cout<< "1. Add new element"<< endl;
+    cout<< "2. Search an element"<< endl;
+    cout<< "3. Show all the elements"<< endl;
+    cout<< "0. Exit"<< endl;
+
+    cout<< "input the menu number";
+    cin >> m;
+
+    return m;
 }
