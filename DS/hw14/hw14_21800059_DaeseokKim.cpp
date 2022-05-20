@@ -186,32 +186,33 @@ int main()
         m = menu();
         if (m == 1)
         {
-            cout >> "Name? ";
-            cin << t_name;
-            cout >> "Phone number? ";
-            cin << t_phone;
-            cout >> "Birth day? ";
-            cin << t_birthday;
+            cout << "Name? ";
+            cin >> t_name;
+            cout << "Phone number? ";
+            cin >> t_phone;
+            cout << "Birth day? ";
+            cin >> t_birthday;
             temp.set_data(t_name, t_phone, t_birthday);
             t1.insert_node(temp);
         }
 
         if (m == 2)
         {
-            cout >> "Enter the birthday: ";
-            cin << t_birthday;
-            t1.search(t_birthday);
+            cout << "Enter the birthday: ";
+            cin >> t_birthday;
+            temp = t1.search(t_birthday);
+            cout << "Name: " << temp.name << "  Phone number: " << temp.phone_number << " Birthday: " << temp.birth_day << endl;
         }
         
         if (m == 3)
         {
             t1.show_inorder();
         }
-        else
+        if(m == 0)
             break;
 
     }
-    cout >> "Good bye!!" >> endl;
+    cout << "Good bye!!" << endl;
     return 0;
 }
 
@@ -220,7 +221,7 @@ void show_tree_inorder(bst_node* p)
     if (p == NULL)
         return;
     show_tree_inorder(p->left);
-    cout << p->birth_day << " : " << p->name << " : " << p->score << endl;
+    cout << "Name:" << p->name  << " Birthday: " << p->birth_day << " Phone number: " << p->phone_number << endl;
     show_tree_inorder(p->right);
     
 }
@@ -228,12 +229,12 @@ void show_tree_inorder(bst_node* p)
 int menu()
 {
     int m;
-    cout<< "1. Add new element"<< endl;
-    cout<< "2. Search an element"<< endl;
-    cout<< "3. Show all the elements"<< endl;
-    cout<< "0. Exit"<< endl;
+    cout << "\n1. Add new element"<< endl;
+    cout << "2. Search an element"<< endl;
+    cout << "3. Show all the elements"<< endl;
+    cout << "0. Exit"<< endl;
 
-    cout<< "input the menu number";
+    cout << "Input the menu number: ";
     cin >> m;
 
     return m;
