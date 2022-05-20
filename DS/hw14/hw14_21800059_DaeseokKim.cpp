@@ -7,32 +7,33 @@ int menu();
 class bst_node 
 {
 public:
-    string s_id;   // 학번
     string name;// 성명
-    double  score;  // 점수
+    string phone_number;  
+    string birth_day;
     bst_node * left, * right;
     bst_node();
-    bst_node(string s1, string s2, double n);
-    void set_data(string s1, string s2, double n);
+    bst_node(string n, string p, string b);
+    void set_data(string n, string p, string b);
 };
 
 bst_node::bst_node()
 {
-    score = 0;
+    left = NULL;
+    right = NULL;
 }
 
-bst_node::bst_node(string s1, string s2, double n)
+bst_node::bst_node(string n, string p, string b)
 {
-    s_id = s1;
-    name = s2;
-    score = n;
+    name = n;
+    phone_number = p;
+    birth_day = b;
 }
 
-void bst_node::set_data(string s1, string s2, double n)
+void bst_node::set_data(string n, string p, string b)
 {
-    s_id = s1;
-    name = s2;
-    score = n;
+    name = n;
+    phone_number = p;
+    birth_day = b;
 }
 
 void show_tree_inorder(bst_node* p);
@@ -63,21 +64,21 @@ bst_node bst_tree::search(string tid)
     if (root == NULL) 
     {// 해당 node 없음 처리 예
         bst_node tmp;
-        tmp.set_data("00000000", "None", -1);
+        tmp.set_data("None", "010000000", "000000000");
         cout << "The key " << tid << " does not exist.\n";
         return tmp;
     }
 
     while (1) 
     {
-        if (p->s_id == tid)
+        if (p->birth_day == tid)
             return (*p);
-        if (p->s_id < tid) 
+        if (p->birth_day < tid) 
         {
             if (p->right == NULL) 
             {
                 bst_node tmp;
-                tmp.set_data("00000000", "None", -1);
+                tmp.set_data("None", "010000000", "000000000");
                 cout << "The key " << tid << " does not exist.\n";
                 return tmp;
             }
@@ -89,7 +90,7 @@ bst_node bst_tree::search(string tid)
             if (p->left == NULL) 
             {
                 bst_node tmp;
-                tmp.set_data("00000000", "None", -1);
+                tmp.set_data("None", "010000000", "000000000");
                 cout << "The key " << tid << " does not exist.\n";
                 return tmp;
             }
@@ -119,13 +120,13 @@ void bst_tree::insert_node(bst_node t)
     
     while (1)
     {
-        if (p->s_id == t.s_id)
+        if (p->birth_day == t.birth_day)
         {
-            cout << "Insertion Failed : the Key " << t.s_id << " already exists." << endl;
+            cout << "Insertion Failed : the Key " << t.birth_day << " already exists." << endl;
             return;
         }
         
-        if (p->s_id < t.s_id) 
+        if (p->birth_day < t.birth_day) 
         {
             if (p->right == NULL) 
             {
@@ -175,28 +176,42 @@ int main()
 {
     bst_node temp;
     bst_tree t1;       
-    temp.set_data("21900013", "Kim", 6.5);      
-    t1.insert_node(temp);     
-    temp.set_data("21900136", "Lee", 8.8);
-    t1.insert_node(temp);
-    temp.set_data("21900333", "Park", 9.2);
-    t1.insert_node(temp);
-    temp.set_data("21800442", "Choi", 7.1);
-    t1.insert_node(temp);
-    temp.set_data("21900375", "Ryu", 5.4);
-    t1.insert_node(temp);
-    temp.set_data("21700248", "Cho", 6.3);
-    t1.insert_node(temp);
-        cout << "\n\n Node List : inorder sequence \n";
-    t1.show_inorder();
-    string s_key = "21800442";
-    temp = t1.search(s_key);
+    int m;
+    string t_name;
+    string t_phone;
+    string t_birthday;
+    
+    while (true)
+    {
+        m = menu();
+        if (m == 1)
+        {
+            cout >> "Name? ";
+            cin << t_name;
+            cout >> "Phone number? ";
+            cin << t_phone;
+            cout >> "Birth day? ";
+            cin << t_birthday;
+            temp.set_data(t_name, t_phone, t_birthday);
+            t1.insert_node(temp);
+        }
 
-    cout << "\n -- " << s_key << "'s record ---" << endl;
-    cout << " Student ID   : "<< temp.s_id << endl;
-    cout << " Student Name : "<< temp.name << endl;
-    cout << " Score        : " << temp.score << endl;
+        if (m == 2)
+        {
+            cout >> "Enter the birthday: ";
+            cin << t_birthday;
+            t1.search(t_birthday);
+        }
+        
+        if (m == 3)
+        {
+            t1.show_inorder();
+        }
+        else
+            break;
 
+    }
+    cout >> "Good bye!!" >> endl;
     return 0;
 }
 
@@ -205,7 +220,7 @@ void show_tree_inorder(bst_node* p)
     if (p == NULL)
         return;
     show_tree_inorder(p->left);
-    cout << p->s_id << " : " << p->name << " : " << p->score << endl;
+    cout << p->birth_day << " : " << p->name << " : " << p->score << endl;
     show_tree_inorder(p->right);
     
 }
