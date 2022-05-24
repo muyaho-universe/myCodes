@@ -2,240 +2,135 @@
 #include <string>
 using namespace std;
 
-int menu();
-
-class bst_node 
-{
+class s_record {
 public:
-    string name;// 성명
-    string phone_number;  
-    string birth_day;
-    bst_node * left, * right;
-    bst_node();
-    bst_node(string n, string p, string b);
-    void set_data(string n, string p, string b);
+    string s_id; // 학번 (Key)
+    string name; // 성명
+    double score; // 점수
+    s_record();
+    s_record(string s1, string s2, double n);
 };
 
-bst_node::bst_node()
+s_record::s_record()
 {
-    left = NULL;
-    right = NULL;
+    score = 0;
 }
 
-bst_node::bst_node(string n, string p, string b)
+s_record::s_record(string s1, string s2, double n)
 {
-    name = n;
-    phone_number = p;
-    birth_day = b;
+    s_id = s1;
+    name = s2;
+    score = n;
 }
 
-void bst_node::set_data(string n, string p, string b)
-{
-    name = n;
-    phone_number = p;
-    birth_day = b;
-}
 
-void show_tree_inorder(bst_node* p);
-
-class bst_tree
-{
-    bst_node * root;
-    int csize;
-public:
-    bst_tree();
-    void insert_node(bst_node t);
-    bool empty();
-    int size();
-    void show_inorder();
-    bst_node search(string s);  // s_record search(string s);   ...
-};
-
-bst_tree::bst_tree()
-{
-    root = NULL;
-    csize = 0;
-}
-
-bst_node bst_tree::search(string tid)
-{
-    bst_node * p;
-    p = root;
-    if (root == NULL) 
-    {// 해당 node 없음 처리 예
-        bst_node tmp;
-        tmp.set_data("None", "010000000", "000000000");
-        cout << "The key " << tid << " does not exist.\n";
-        return tmp;
-    }
-
-    while (1) 
-    {
-        if (p->birth_day == tid)
-            return (*p);
-        if (p->birth_day < tid) 
-        {
-            if (p->right == NULL) 
-            {
-                bst_node tmp;
-                tmp.set_data("None", "010000000", "000000000");
-                cout << "The key " << tid << " does not exist.\n";
-                return tmp;
-            }
-            else
-                p = p->right;
-        }
-        else 
-        {
-            if (p->left == NULL) 
-            {
-                bst_node tmp;
-                tmp.set_data("None", "010000000", "000000000");
-                cout << "The key " << tid << " does not exist.\n";
-                return tmp;
-            }
-            else
-                p = p->left;
-        }
-    }
-}
-
-void bst_tree::insert_node(bst_node t)
-{
-    bst_node* p;
-    bst_node* tmp;
-    
-    tmp = new bst_node;
-    *tmp = t;
-    tmp->left = NULL;
-    tmp->right = NULL;
-    
-    if (root == NULL) 
-    {
-        root = tmp;
-        return;
-    }
-    
-    p = root;
-    
-    while (1)
-    {
-        if (p->birth_day == t.birth_day)
-        {
-            cout << "Insertion Failed : the Key " << t.birth_day << " already exists." << endl;
-            return;
-        }
-        
-        if (p->birth_day < t.birth_day) 
-        {
-            if (p->right == NULL) 
-            {
-                p->right = tmp;
-                return;
-            }
-            else
-                p = p->right;
-        }
-        
-        else 
-        {
-            if (p->left == NULL) 
-            {
-                p->left = tmp;
-                return;
-            }
-            else
-                p = p->left;
-        }
-    }
-}
-
-bool bst_tree::empty()
-{
-    if(csize == 0) 
-        return true;
-    return false;
-}
-
-int bst_tree::size()
-{
-    return csize;
-}
-void bst_tree::show_inorder()
-{
-    if (root == NULL)
-    {
-        cout << "Nothing to print out!" << endl;
-        return;
-    }
-    
-    show_tree_inorder(root);
-}
+void insertion_sort(s_record a[], int n);
+void bubble_sort(s_record a[], int n);
+void selection_sort(s_record a[], int n);
+void show_thelist(s_record a[], int n);
+void quick_sort(s_record a[], int left, int right);
+void swap(s_record a[], s_record b[]);
 
 int main()
 {
-    bst_node temp;
-    bst_tree t1;       
-    int m;
-    string t_name;
-    string t_phone;
-    string t_birthday;
-    
-    while (true)
-    {
-        m = menu();
-        if (m == 1)
-        {
-            cout << "Name? ";
-            cin >> t_name;
-            cout << "Phone number? ";
-            cin >> t_phone;
-            cout << "Birth day? ";
-            cin >> t_birthday;
-            temp.set_data(t_name, t_phone, t_birthday);
-            t1.insert_node(temp);
-        }
+    s_record s_list[12] = { {"21900013", "Kim ", 6.5}, {"21900136", "Lee ", 8.8 }, {"21900333", "Park", 9.2 },
+        { "21800442", "Choi", 7.1}, {"21900375", "Ryu ", 5.4  }, {"21700248", "Cho ", 6.3 },
+        { "21700302", "Jung", 8.3}, {"21800255", "Han ", 6.9  }, {"21800369", "Kang", 6.3 },
+        { "21900401", "Yang", 9.1}, {"21800123", "Moon", 8.1  }, {"21700678", "Seo ", 7.9 } };
+    int    n = 12;
+    // insertion_sort(s_list, n);
+    bubble_sort(s_list, n);
+    // selection_sort(s_list, n);
 
-        if (m == 2)
-        {
-            cout << "Enter the birthday: ";
-            cin >> t_birthday;
-            temp = t1.search(t_birthday);
-            cout << "Name: " << temp.name << "  Phone number: " << temp.phone_number << " Birthday: " << temp.birth_day << endl;
-        }
-        
-        if (m == 3)
-        {
-            t1.show_inorder();
-        }
-        if(m == 0)
-            break;
+    // quick_sort(s_list, 0, n-1);
+    // merge_sort(s_list, n);
+    // heap_sort(s_list, n); 
 
-    }
-    cout << "Good bye!!" << endl;
+    cout << "< The result of the sorting >" << endl;
+    show_thelist(s_list, n);
+
     return 0;
 }
 
-void show_tree_inorder(bst_node* p)
+void insertion_sort(s_record a[], int n)
 {
-    if (p == NULL)
+    for (int j = 1; j < n; j++) 
+    {
+        s_record temp = a[j];
+        int k = j-1;
+        while ((k >= 0)&&(a[k].s_id > temp.s_id)) 
+        {
+            a[k + 1] = a[k];
+            k--;
+        }
+        a[k + 1] = temp;
+    }
+}
+
+void bubble_sort(s_record a[], int n)
+{
+    s_record temp;
+    for (int j = n-1; j >= 1; j--) 
+        for (int k = 0; k< j; k++)
+            if (a[k].s_id > a[k+1].s_id) 
+            {
+                temp = a[k];
+                a[k] = a[k + 1];
+                a[k + 1] = temp;
+            }
+}
+
+void selection_sort(s_record a[], int n)
+{
+    s_record temp;
+    for (int j = 0; j < n; j++) 
+    {
+        int min_i = j;
+        for (int k = j + 1; k < n; k++)
+            if (a[k].s_id < a[min_i].s_id)
+                min_i = k;
+        temp = a[j];
+        a[j] = a[min_i];
+        a[min_i] = temp;
+    }
+}
+
+void show_thelist(s_record a[], int n)
+{
+    for (int i = 0;i < n; i++)
+    {
+        cout << a[i].s_id << " : ";
+        cout << a[i].name << " : ";
+        cout << a[i].score << endl;
+    }
+}
+
+void quick_sort(s_record a[], int left, int right)
+{
+    s_record pivot, temp;
+    int i, j;
+    if (left >= right) 
         return;
-    show_tree_inorder(p->left);
-    cout << "Name:" << p->name  << " Birthday: " << p->birth_day << " Phone number: " << p->phone_number << endl;
-    show_tree_inorder(p->right);
+    i = left;
+    j = right + 1;
+    pivot = a[left];
+    do 
+    {
+        do 
+        {
+            i++;
+        } while ((i <= right)&& (a[i].s_id < pivot.s_id) );
+
+        do {
+            j--;
+        } while (a[j].s_id > pivot.s_id);
+        if (i < j)
+            swap(a[i], a[j]);
+    } while (i < j);
     
+    swap(a[left], a[j]);
+    quick_sort(a, left, j - 1);
+    quick_sort(a, j + 1, right);
 }
 
-int menu()
-{
-    int m;
-    cout << "\n1. Add new element"<< endl;
-    cout << "2. Search an element"<< endl;
-    cout << "3. Show all the elements"<< endl;
-    cout << "0. Exit"<< endl;
-
-    cout << "Input the menu number: ";
-    cin >> m;
-
-    return m;
-}
+void swap(s_record a[], s_record b[]);
