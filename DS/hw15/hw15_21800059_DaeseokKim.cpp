@@ -135,7 +135,13 @@ void quick_sort(s_record a[], int left, int right)
     quick_sort(a, j + 1, right);
 }
 
-void swap(s_record a[], s_record b[]);
+void swap(s_record a[], s_record b[])
+{
+    s_record temp;
+    temp = a;
+    a = b;
+    b = temp;
+}
 
 void heap_sort(s_record a[], int n)
 {
