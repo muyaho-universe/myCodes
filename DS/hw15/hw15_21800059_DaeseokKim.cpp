@@ -29,6 +29,8 @@ void bubble_sort(s_record a[], int n);
 void selection_sort(s_record a[], int n);
 void show_thelist(s_record a[], int n);
 void quick_sort(s_record a[], int left, int right);
+void heap_sort(s_record a[], int n);
+void merge(s_record a[], s_record b[], int n1, int n2, int n3, int n4);
 void swap(s_record a[], s_record b[]);
 
 int main()
@@ -134,3 +136,46 @@ void quick_sort(s_record a[], int left, int right)
 }
 
 void swap(s_record a[], s_record b[]);
+
+void heap_sort(s_record a[], int n)
+{
+    int i;
+    s_record b[S_SIZE], temp;
+
+    for (i = 0; i < n; i++)                      // 1부터 n번째까지로 위치 조정
+        b[i + 1] =  a[i];
+    
+    for (i = n / 2; i > 0; i--)                   // 주어진 입력에 대하여 heap 구성
+        adjust(b, i, n);
+    
+    for (i = n - 1; i > 0; i--) 
+    {
+        temp = b[1];
+        b[1] = b[i + 1];
+        b[i + 1] = temp;
+        adjust(b, 1, i);
+    }// b에서 a로 copy하는 과정 추가
+
+}
+
+void merge(s_record a[], s_record b[], int n1, int n2, int n3, int n4)
+{
+    int i, j, k, t;
+    i = n1;
+    j = n3;
+    k = n1;
+    
+    while ((i <= n2) && (j <= n4))
+    {                                                
+        if (a[i].s_id <= a[j].s_id)
+            b[k++] = a[i++];
+        else                                   
+            b[k++] = a[j++];
+    }
+    if (i > n2)
+        for (t = j; t <= n4; t++)
+           b[t] = a[t];
+    else
+        for (t = i; t <= n2; t++)
+            b[k+t-i] = a[t];
+}
