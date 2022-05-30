@@ -2,6 +2,8 @@
 #include <string>
 using namespace std;
 
+#define S_SIZE 100
+
 class s_record {
 public:
     string s_id; // 학번 (Key)
@@ -146,7 +148,8 @@ void swap(s_record a[], s_record b[])
 void heap_sort(s_record a[], int n)
 {
     int i;
-    s_record b[S_SIZE], temp;
+    s_record b[S_SIZE];
+    s_record temp;
 
     for (i = 0; i < n; i++)                      // 1부터 n번째까지로 위치 조정
         b[i + 1] =  a[i];
