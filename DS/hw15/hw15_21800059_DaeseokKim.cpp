@@ -33,8 +33,10 @@ void show_thelist(s_record a[], int n);
 void quick_sort(s_record a[], int left, int right);
 void heap_sort(s_record a[], int n);
 void merge(s_record a[], s_record b[], int n1, int n2, int n3, int n4);
-void swap(s_record a[], s_record b[]);
+void swap(s_record a, s_record b);
 void adjust(s_record a[], int troot, int size);
+void merge_sort(s_record a[], int n);
+void merge_pass(s_record a[], s_record b[], int n, int s);
 
 int main()
 {
@@ -138,12 +140,12 @@ void quick_sort(s_record a[], int left, int right)
     quick_sort(a, j + 1, right);
 }
 
-void swap(s_record a[], s_record b[])
+void swap(s_record a, s_record b)
 {
-    s_record temp[20];
-    temp[0] = a;
+    s_record temp;
+    temp = a;
     a = b;
-    b = temp[0];
+    b = temp;
 }
 
 void heap_sort(s_record a[], int n)
@@ -211,4 +213,29 @@ void adjust(s_record a[], int troot, int size)
         }
     }
     a[child / 2] = tmp;
+}
+
+void merge_sort(s_record a[], int n)
+{
+    int s = 1;
+    s_record b[S_SIZE];
+    while (s < n) 
+    {
+        merge_pass(a, b, n-1, s);
+        s *= 2;
+        merge_pass(b, a, n-1, s);
+        s *= 2;
+    }
+}
+
+void merge_pass(s_record a[], s_record b[], int n, int s)
+{
+    int i, j;
+    for (i = 0; i < (n - 2 * s + 1); i += 2 * s)
+        merge(a, b, i, i + s - 1, i + s, i + 2 * s - 1);
+    if (i + s <= n)
+        merge(a, b, i, i + s - 1, i + s, n);
+    else
+        for (j=i; j<= n; j++)
+            b[j] = a[j];
 }
