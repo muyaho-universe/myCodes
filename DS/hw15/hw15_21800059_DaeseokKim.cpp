@@ -34,7 +34,7 @@ void quick_sort(s_record a[], int left, int right);
 void heap_sort(s_record a[], int n);
 void merge(s_record a[], s_record b[], int n1, int n2, int n3, int n4);
 void swap(s_record a[], s_record b[]);
-void adjust(s_record b[], int num1, int num2);
+void adjust(s_record a[], int troot, int size);
 
 int main()
 {
@@ -190,7 +190,25 @@ void merge(s_record a[], s_record b[], int n1, int n2, int n3, int n4)
             b[k+t-i] = a[t];
 }
 
-void adjust(s_record b[], int num1, int num2)
+void adjust(s_record a[], int troot, int size)
 {
-
+    double tmpkey;
+    int child;
+    s_record tmp;
+    tmp = a[troot];
+    tmpkey = a[troot].score;
+    child = 2 * troot;
+    while (child <= size) 
+    {
+        if ((child < size) && (a[child].score < a[child + 1].score))
+            child++;
+        if (tmpkey > a[child].score)
+            break;
+        else 
+        {
+            a[child / 2] = a[child];
+            child *= 2;
+        }
+    }
+    a[child / 2] = tmp;
 }
