@@ -33,7 +33,7 @@ void show_thelist(s_record a[], int n);
 void quick_sort(s_record a[], int left, int right);
 void heap_sort(s_record a[], int n);
 void merge(s_record a[], s_record b[], int n1, int n2, int n3, int n4);
-void swap(s_record a, s_record b);
+void swap(s_record* a, s_record* b);
 void adjust(s_record a[], int troot, int size);
 void merge_sort(s_record a[], int n);
 void merge_pass(s_record a[], s_record b[], int n, int s);
@@ -140,9 +140,9 @@ void quick_sort(s_record a[], int left, int right)
     quick_sort(a, j + 1, right);
 }
 
-void swap(s_record a, s_record b)
+void swap(s_record* a, s_record* b)
 {
-    s_record temp;
+    s_record* temp;
     temp = a;
     a = b;
     b = temp;
