@@ -34,6 +34,7 @@ void quick_sort(s_record a[], int left, int right);
 void heap_sort(s_record a[], int n);
 void merge(s_record a[], s_record b[], int n1, int n2, int n3, int n4);
 void swap(s_record a[], s_record b[]);
+void adjust(s_record b[], int num1, int num2);
 
 int main()
 {
@@ -139,10 +140,10 @@ void quick_sort(s_record a[], int left, int right)
 
 void swap(s_record a[], s_record b[])
 {
-    s_record temp;
-    temp = a;
+    s_record temp[20];
+    temp[0] = a;
     a = b;
-    b = temp;
+    b = temp[0];
 }
 
 void heap_sort(s_record a[], int n)
@@ -187,4 +188,9 @@ void merge(s_record a[], s_record b[], int n1, int n2, int n3, int n4)
     else
         for (t = i; t <= n2; t++)
             b[k+t-i] = a[t];
+}
+
+void adjust(s_record b[], int num1, int num2)
+{
+
 }
