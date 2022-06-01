@@ -168,6 +168,11 @@ void heap_sort(s_record a[], int n)
         adjust(b, 1, i);
     }// b에서 a로 copy하는 과정 추가
 
+    for ( i = 1; i <= n; i++)
+    {
+        a[i-1] = b[i];
+    }
+    
 }
 
 void merge(s_record a[], s_record b[], int n1, int n2, int n3, int n4)
