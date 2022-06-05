@@ -177,7 +177,7 @@ struct node * delete_node(struct node * root, char value[20]){
         }
         struct node * temp = min_value_node(root->right);
         strcpy(root->item,temp->item);
-        root->right = delete_node(root->right, temp->key)
+        root->right = delete_node(root->right, temp->item);
     }
     return root;
 }
