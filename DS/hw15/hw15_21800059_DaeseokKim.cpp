@@ -199,17 +199,17 @@ void merge(s_record a[], s_record b[], int n1, int n2, int n3, int n4)
 
 void adjust(s_record a[], int troot, int size)
 {
-    double tmpkey;
+    string tmpkey;
     int child;
     s_record tmp;
     tmp = a[troot];
-    tmpkey = a[troot].score;
+    tmpkey = a[troot].s_id;
     child = 2 * troot;
     while (child <= size) 
     {
-        if ((child < size) && (a[child].score < a[child + 1].score))
+        if ((child < size) && (a[child].s_id < a[child + 1].s_id))
             child++;
-        if (tmpkey > a[child].score)
+        if (tmpkey > a[child].s_id)
             break;
         else 
         {
