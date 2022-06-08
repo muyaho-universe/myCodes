@@ -11,6 +11,8 @@ int main()
     int i;
     s1.push(1);
     s1.push(2);
-    i = s1.pop();
+    i = s1.top();
+    s1.pop();
     cout << i <<endl;
+    return 0;
 }
