@@ -6,14 +6,39 @@ using namespace std;
 
 int main()
 {
-    vector <int> a(10);
+    vector <int> a;
     vector <int> :: iterator p;
+    unsigned int k;
+    a.push_back(3);
+    a.push_back(4);
+    a.push_back(7);
 
-    for (int k = 0; k < 10; k ++)
-        a[k] = k;
+    p = a.begin() + 2;
+    a.insert(p, 3, 5);
 
-    for ( p = a.begin(); p < a.end(); p++)
-        cout << *p << endl;
+    for(k = 0; k < a.size(); k++)
+        cout << a[k] << " : ";
+    cout << endl;
+
+    vector <int> b(a);
+    b.insert(b.begin()+3, a.begin(), a.begin()+3);
+
+    for(k = 0; k < b.size(); k++)
+        cout <<  b[k] << " : ";
+    cout << endl;
+
+    p = b.begin()+2;
+    b.erase(p, p+2);
+
+    for(k = 0; k < b.size(); k++)
+        cout << b[k] << " : ";
+    cout << endl;
+
+    // for (int k = 0; k < 10; k ++)
+    //     a[k] = k;
+
+    // for ( p = a.begin(); p < a.end(); p++)
+    //     cout << *p << endl;
     
     // a.push_back(2);
     // a.push_back(4);
