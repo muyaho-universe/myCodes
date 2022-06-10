@@ -1,6 +1,8 @@
 #include <iostream>
 #include <list>
 
+using namespace std;
+
 int main()
 {
     list <int> a;
@@ -16,5 +18,5 @@ int main()
     for(p = a.begin(); p!=a.end(); p++)
         cout << *p << " : ";
     cout << endl;
-    return 0
+    return 0;
 }
