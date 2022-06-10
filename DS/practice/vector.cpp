@@ -14,7 +14,7 @@ int main()
     a.push_back(7);
 
     p = a.begin() + 2;
-    a.insert(p, 3, 5);
+    a.insert(p, p, p+2);
 
     for(k = 0; k < a.size(); k++)
         cout << a[k] << " : ";
